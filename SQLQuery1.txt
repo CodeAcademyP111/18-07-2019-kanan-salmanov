@@ -1,0 +1,141 @@
+create database P111
+
+--drop database P111
+
+
+use P111;
+
+--drop table Student
+--create table Student(
+--	Id int
+--)
+
+--ALTER table Student Add Name nvarchar(100)
+
+--Alter table Student
+--drop column Name
+
+Create table Students(
+	Id int,
+	Name nvarchar(100),
+	Surname nvarchar(100),
+	Birthday datetime
+)
+
+Insert into Students
+values(1,'Cavid','Beshirov','1993-05-10')
+
+Insert into Students
+values(2,'Mushfiq','Agayev','1990-08-30'),
+		(3,'Ferid','Yusifzade','1995-08-28'),
+		(4,'Firuze','Semedova','1993-12-01')
+
+Insert into Students (Name) values('Shirvan')
+
+Select * from Students
+
+Delete Students 
+where Id=5
+
+Update Students
+set Id=5 where
+Name='Shirvan'
+
+Delete Students
+where Id=4
+
+Drop table Students
+
+Create table Students(
+	Id int identity,
+	Name nvarchar(100) not null,
+	Surname nvarchar(100)
+)
+
+
+Insert into Students (Name)
+values('Cavid')
+
+Insert into Students
+values('Mushfiq','Agayev'),
+		('Ferid','Yusifzade'),
+		('Firuze','Semedova')
+
+
+
+Insert into Students
+values('Mushfiq','Agayev1')
+
+Delete Students 
+where Id=4
+
+Alter table Students
+Add Groups nvarchar(100)
+
+Alter table Students
+Drop column Groups
+
+
+
+update Students
+set Groups = 'P111'
+--where Id=3 OR Id=5
+--where Id<6 AND Id>2
+--where Id Between  2 AND 5
+--where Id in(3,5)
+where Id in(
+	Select Id from Students
+	where Name='Cavid'
+)
+
+select * from Students
+
+Select Count(*) 'Count' from Students 
+where Surname is not null
+
+Alter table Students
+Add Email nvarchar(250)
+
+Select 
+SUBSTRING(Email,0,CHARINDEX('@',Email)) 
+from Students
+
+Select 
+Replace(Email,'@','-') 'Replace'
+from Students
+
+Select * 
+from Students
+order by Id desc
+
+Select distinct Name
+from Students
+
+select Count(Name) from Students
+Where Name='Ferid'
+ 
+
+ Drop table Students
+
+create table Groups(
+	Id int primary key identity,
+	Name nvarchar(25) not null
+)
+
+create table Students(
+	Id int primary key identity,
+	Name nvarchar(100) not null,
+	Surname nvarchar(100),
+	Email nvarchar(255) unique,
+	GroupsId int references Groups(Id)
+)
+
+
+Select * from Students
+Select * from Groups
+
+Select Students.Name,Surname,Email,Groups.Name 'Group'
+from Students
+
+join Groups
+on Students.GroupsId=Groups.Id
